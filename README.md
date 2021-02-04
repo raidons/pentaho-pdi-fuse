@@ -23,9 +23,9 @@ Exemplo de Execução do Spoon
 	-e XAUTH=$(xauth list|grep `uname -n` | cut -d ' ' -f5) -e "DISPLAY" \
 	--name spoon pentaho-pdi spoon
 	
-	OBS: $1 ==> É o limite de memoria a ser usado no container e no proprio pentaho
-	     $2 ==> É o Diretorio onde sera mapeado o /job
-	     $3 ==> É o Diretorio onde sera mapeado o /output
+	OBS:  $1 ==> É o limite de memoria a ser usado no container e no proprio pentaho
+          $2 ==> É o arquivo .json da conta de sistema
+          $3 ==> É o nome do bucket na google
 	
     OBS: 
         - Tenha certeza de estar com a imagem do pentaho criada em suas imagens com o nome de pentaho-pdi ou usando a imagem sandro3000/pentaho-pdi
