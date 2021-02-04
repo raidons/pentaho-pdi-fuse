@@ -1,0 +1,31 @@
+#!/bin/bash
+#set -x
+
+IMAGE=sandro3000/pentaho-pdi
+CONTAINER_NAME=spoon
+
+is_running(){
+	#  Returns (echo) CONTAINER ID if container exists and is running, and
+        # zero length string otherwise
+id=$(docker ps -q -f status=running -f name=$CONTAINER_NAME)
+	echo $id
+}
+
+## main()
+
+# Check container status
+CONTAINER_ID=$(is_running)
+
+if [ -z $CONTAINER_ID ] ; then
+	# Container not running, start it
+	docker run -it --rm -v /tmp/.X11-unix/:/tmp/.X11-unix/:ro \
+	--memory=$1m \
+	-v $2:/jobs \
+	-v $3:/output \
+	-e START_MEN=1024m \
+	-e MAX_MEN=$1m \
+	-e XAUTH=$(xauth list|grep `uname -n` | cut -d ' ' -f5) -e "DISPLAY" \
+	--name $CONTAINER_NAME $IMAGE spoon
+else
+	echo Spoon already running \($CONTAINER_ID\).
+fi
